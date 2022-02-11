@@ -8,38 +8,39 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import dia.units.refuelapp.db.GasolinePlantsDb;
-import dia.units.refuelapp.db.dao.GasolinePlantDAO;
+import dia.units.refuelapp.db.dao.GasolinePlantDao;
 import dia.units.refuelapp.db.entities.GasolinePlant;
+import dia.units.refuelapp.db.entities.PlantWithPrices;
 
 public class GasolinePlantRepository {
-    private GasolinePlantDAO gasolinePlantDAO;
-    private LiveData<List<GasolinePlant>> allGasolinePlants;
+    private GasolinePlantDao gasolinePlantDao;
+    private LiveData<List<PlantWithPrices>> allPlantsWithPrices;
 
     public GasolinePlantRepository(Application application) {
         GasolinePlantsDb db = GasolinePlantsDb.getInstance(application);
-        gasolinePlantDAO = db.gasolinePlantDAO();
-        allGasolinePlants = gasolinePlantDAO.getAllPlants();
+        gasolinePlantDao = db.gasolinePlantDao();
+        allPlantsWithPrices = gasolinePlantDao.getAllPlantsWithPrices();
     }
 
-    public LiveData<List<GasolinePlant>> getAllGasolinePlants(){
-        return allGasolinePlants;
+    public LiveData<List<PlantWithPrices>> getAllPlantsWithPrices() {
+        return allPlantsWithPrices;
     }
 
-    public void insert (GasolinePlant gasolinePlant){
-        new InsertGasolinePlantAsyncTask(gasolinePlantDAO).execute(gasolinePlant);
+    public void insert(GasolinePlant gasolinePlant) {
+        GasolinePlantsDb.databaseWriteExecutor.execute(() -> {
+            gasolinePlantDao.insert(gasolinePlant);
+        });
     }
 
-    private static class InsertGasolinePlantAsyncTask extends AsyncTask<GasolinePlant, Void, Void>{
-        private GasolinePlantDAO gasolinePlantDAO;
+    public void insertAll(List<GasolinePlant> plants){
+        GasolinePlantsDb.databaseWriteExecutor.execute(()->{
+            gasolinePlantDao.insertAll(plants);
+        });
+    }
 
-        private InsertGasolinePlantAsyncTask(GasolinePlantDAO gasolinePlantDAO){
-            this.gasolinePlantDAO = gasolinePlantDAO;
-        }
-
-        @Override
-        protected Void doInBackground(GasolinePlant... gasolinePlants) {
-            gasolinePlantDAO.insert(gasolinePlants[0]);
-            return null;
-        }
+    public void count(){
+        GasolinePlantsDb.databaseWriteExecutor.execute(() -> {
+            gasolinePlantDao.count();
+        });
     }
 }

@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">RefuelApp</string>
+    <string name="self_1">self-service</string>
+    <string name="self_0">servito</string>
+    <string name="oggi">(Oggi)</string>
+    <string name="_1_789">1.789</string>
+    <string name="self">self</string>
+    <string name="distanza">distanza</string>
+    <string name="indirizzo">Indirizzo</string>
+    <string name="logo_description">logo of gasoline company</string>
+    <string name="ieri">(Ieri)</string>
+    <string name="giorni_last_update">{0,number,integer} giorni fa</string>
 </resources>

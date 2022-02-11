@@ -3,8 +3,9 @@ package dia.units.refuelapp.db.entities;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "plants_table")
+@Entity(tableName = GasolinePlant.TABLE_NAME)
 public class GasolinePlant {
+    public static final String TABLE_NAME = "plants_table";
     @PrimaryKey
     private int idPlant;
     private String manager;
@@ -14,10 +15,10 @@ public class GasolinePlant {
     private String address;
     private String city;
     private String province;
-    private float latitude;
-    private float longitude;
+    private double latitude;
+    private double longitude;
 
-    public GasolinePlant(int idPlant, String manager, String flagCompany, String type, String name, String address, String city, String province, float latitude, float longitude) {
+    public GasolinePlant(int idPlant, String manager, String flagCompany, String type, String name, String address, String city, String province, double latitude, double longitude) {
         this.idPlant = idPlant;
         this.manager = manager;
         this.flagCompany = flagCompany;
@@ -62,11 +63,11 @@ public class GasolinePlant {
         return province;
     }
 
-    public float getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public float getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 }

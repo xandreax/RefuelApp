@@ -1,6 +1,7 @@
 package dia.units.refuelapp.db;
 
 import androidx.room.TypeConverter;
+
 import java.util.Date;
 
 public class DateConverter {
