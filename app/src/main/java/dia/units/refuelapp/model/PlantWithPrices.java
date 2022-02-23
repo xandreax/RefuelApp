@@ -1,9 +1,8 @@
-package dia.units.refuelapp.db.entities;
+package dia.units.refuelapp.model;
 
 import androidx.room.Embedded;
 import androidx.room.Relation;
 
-import java.util.Collections;
 import java.util.List;
 
 public class PlantWithPrices {

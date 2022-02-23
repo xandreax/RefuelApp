@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "ab6a2f6d9711249141e188be3beab0f8",
+    "identityHash": "9e5298d34cea6e9d008581f0c4340876",
     "entities": [
       {
         "tableName": "plants_table",
@@ -80,7 +80,7 @@
       },
       {
         "tableName": "prices_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `idPlant` INTEGER NOT NULL, `fuelType` TEXT, `price` REAL NOT NULL, `isSelf` INTEGER NOT NULL, `updateDate` INTEGER, FOREIGN KEY(`idPlant`) REFERENCES `plants_table`(`idPlant`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `idPlant` INTEGER NOT NULL, `fuelType` TEXT, `price` REAL NOT NULL, `isSelf` INTEGER NOT NULL, `updateDate` INTEGER)",
         "fields": [
           {
             "fieldPath": "id",
@@ -126,25 +126,13 @@
           "autoGenerate": true
         },
         "indices": [],
-        "foreignKeys": [
-          {
-            "table": "plants_table",
-            "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
-            "columns": [
-              "idPlant"
-            ],
-            "referencedColumns": [
-              "idPlant"
-            ]
-          }
-        ]
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ab6a2f6d9711249141e188be3beab0f8')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9e5298d34cea6e9d008581f0c4340876')"
     ]
   }
 }

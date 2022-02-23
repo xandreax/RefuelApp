@@ -29,26 +29,45 @@
                 android:layout_gravity="center"
                 android:paddingLeft="14dp"
                 android:paddingRight="14dp"
-                android:src="@drawable/esso" />
+                android:src="@drawable/esso"
+                android:contentDescription="@string/logo_description" />
 
-            <TextView
-                android:id="@+id/indirizzo"
+            <LinearLayout
+                android:id="@+id/info_container"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/logo"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="4dp"
-                android:layout_marginTop="10dp"
-                android:text="@string/indirizzo" />
+                android:layout_marginTop="4dp"
+                android:layout_toEndOf="@id/logo"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/name_plant"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/name_plant" />
+
+                <TextView
+                    android:id="@+id/indirizzo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/indirizzo" />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/distanza"
-                android:layout_width="60dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/indirizzo"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="10dp"
+                android:layout_toEndOf="@id/info_container"
                 android:text="@string/distanza"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
@@ -56,12 +75,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="4dp"
-                android:layout_toEndOf="@id/distanza"
-                android:orientation="vertical"
                 android:layout_marginEnd="6dp"
-                android:layout_alignParentEnd="true">
+                android:layout_toEndOf="@id/distanza"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/self"

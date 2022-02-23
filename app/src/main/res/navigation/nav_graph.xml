@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/gasolinePlantsListFragment">
+
+    <fragment
+        android:id="@+id/gasolinePlantsListFragment"
+        android:name="dia.units.refuelapp.GasolinePlantsListFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_plants_list">
+        <action
+            android:id="@+id/action_gasolinePlantsListFragment_to_detailGasolinePlantFragment"
+            app:destination="@id/detailGasolinePlantFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/gasolinePlantsListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailGasolinePlantFragment"
+        android:name="dia.units.refuelapp.DetailGasolinePlantFragment"
+        tools:layout="@layout/fragment_detail_gasoline_plant" />
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="dia.units.refuelapp.FavoritesFragment"
+        android:label="fragment_favorites_list"
+        tools:layout="@layout/fragment_favorites_list" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="dia.units.refuelapp.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
+</navigation>

@@ -1,35 +1,44 @@
-package dia.units.refuelapp.db.entities;
+package dia.units.refuelapp.model;
+
+import android.annotation.SuppressLint;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
+import com.opencsv.bean.CsvBindByName;
+import com.opencsv.bean.CsvDate;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 import dia.units.refuelapp.db.DateConverter;
 
-@Entity(tableName = GasolinePrice.TABLE_NAME,
-        foreignKeys = {@ForeignKey(entity = GasolinePlant.class,
-                parentColumns = "idPlant",
-                childColumns = "idPlant",
-                onDelete = ForeignKey.CASCADE)})
+@Entity(tableName = GasolinePrice.TABLE_NAME)
 public class GasolinePrice {
     public static final String TABLE_NAME = "prices_table";
     @PrimaryKey(autoGenerate = true)
     private int id;
+    @CsvBindByName(column = "idImpianto")
     private int idPlant;
+    @CsvBindByName(column = "descCarburante")
     private String fuelType;
+    @CsvBindByName(column = "prezzo")
     private double price;
+    @CsvBindByName(column = "isSelf")
     private int isSelf;
     @TypeConverters(DateConverter.class)
+    @CsvBindByName(column = "dtComu")
+    @CsvDate("dd/MM/yyyy HH:mm:ss")
     private Date updateDate;
 
     public GasolinePrice() {
     }
 
+    @SuppressLint("SimpleDateFormat")
     public GasolinePrice(int idPlant, String fuelType, double price, int isSelf, String updateDate) {
         this.idPlant = idPlant;
         this.fuelType = fuelType;
@@ -94,5 +103,18 @@ public class GasolinePrice {
     public int getDaysOfLastUpdate (Date date){
         long diffInMillis = Math.abs(date.getTime() - updateDate.getTime());
         return (int) (diffInMillis/ (1000 * 60 * 60* 24));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GasolinePrice that = (GasolinePrice) o;
+        return id == that.id && idPlant == that.idPlant && Double.compare(that.price, price) == 0 && isSelf == that.isSelf && fuelType.equals(that.fuelType) && updateDate.equals(that.updateDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, idPlant, fuelType, price, isSelf, updateDate);
     }
 }

@@ -10,4 +10,9 @@
     <string name="logo_description">logo of gasoline company</string>
     <string name="ieri">(Ieri)</string>
     <string name="giorni_last_update">{0,number,integer} giorni fa</string>
+    <string name="nav_menu_home">Home</string>
+    <string name="nav_menu_favorites">Favorites</string>
+    <string name="nav_menu_search">Search</string>
+    <string name="hello_blank_fragment">Detail fragment</string>
+    <string name="name_plant">name_plant</string>
 </resources>
