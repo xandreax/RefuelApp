@@ -5,10 +5,31 @@
     android:layout_height="match_parent"
     tools:context="dia.units.refuelapp.GasolinePlantsListFragment">
 
-   <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_gasoline_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/recyclerview_plant_item" />
+        android:visibility="visible"
+        tools:listitem="@layout/recyclerview_plant_item"
+        tools:visibility="visible"
+        />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/text_progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_below="@id/progressBar"
+        android:text="Updating Data.."
+        android:visibility="invisible"
+        tools:visibility="visible" />
 
 </RelativeLayout>

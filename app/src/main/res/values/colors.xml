@@ -8,4 +8,6 @@
     <color name="teal_A300">#6effe8</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="yellow">#FFEB3B</color>
+    <color name="light_grey">#d3d3d3</color>
 </resources>

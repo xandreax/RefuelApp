@@ -1,5 +1,6 @@
 package dia.units.refuelapp.ui;
 
+import android.location.Location;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,8 @@ import dia.units.refuelapp.model.PlantWithPrices;
 
 public class PlantsAdapter extends PagingDataAdapter<PlantWithPrices, PlantViewHolder> {
     private onItemClickListener listener;
+    private Location actualLocation;
+    private String fuel_type;
 
     private static final DiffUtil.ItemCallback<PlantWithPrices> DIFF_CALLBACK = new DiffUtil.ItemCallback<PlantWithPrices>() {
         @Override
@@ -51,7 +54,15 @@ public class PlantsAdapter extends PagingDataAdapter<PlantWithPrices, PlantViewH
     public void onBindViewHolder(@NonNull PlantViewHolder holder, int position) {
         PlantWithPrices currentPlan = getItem(position);
         if (currentPlan != null)
-            holder.bind(currentPlan);
+            holder.bind(currentPlan, actualLocation, fuel_type);
+    }
+
+    public void setFuel_type(String fuel_type) {
+        this.fuel_type = fuel_type;
+    }
+
+    public void setActualLocation(Location actualLocation) {
+        this.actualLocation = actualLocation;
     }
 
     public interface onItemClickListener {

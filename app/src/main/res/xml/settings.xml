@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ListPreference
+        app:key="fuelType"
+        app:title="Scegli il carburante da visualizzare"
+        app:defaultValue="Benzina"/>
+</PreferenceScreen>

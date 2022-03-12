@@ -69,6 +69,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_toEndOf="@id/info_container"
                 android:text="@string/distanza"
+                android:textSize="18dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <LinearLayout

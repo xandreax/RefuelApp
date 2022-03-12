@@ -2,9 +2,8 @@ package dia.units.refuelapp.model;
 
 import android.annotation.SuppressLint;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
-import androidx.room.ForeignKey;
-import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import com.opencsv.bean.CsvBindByName;
@@ -17,14 +16,14 @@ import java.util.Objects;
 
 import dia.units.refuelapp.db.DateConverter;
 
-@Entity(tableName = GasolinePrice.TABLE_NAME)
+@Entity(tableName = GasolinePrice.TABLE_NAME, primaryKeys = {"idPlant", "fuelType", "isSelf"})
 public class GasolinePrice {
     public static final String TABLE_NAME = "prices_table";
-    @PrimaryKey(autoGenerate = true)
-    private int id;
+
     @CsvBindByName(column = "idImpianto")
     private int idPlant;
     @CsvBindByName(column = "descCarburante")
+    @NonNull
     private String fuelType;
     @CsvBindByName(column = "prezzo")
     private double price;
@@ -39,7 +38,7 @@ public class GasolinePrice {
     }
 
     @SuppressLint("SimpleDateFormat")
-    public GasolinePrice(int idPlant, String fuelType, double price, int isSelf, String updateDate) {
+    public GasolinePrice(int idPlant, @NonNull String fuelType, double price, int isSelf, String updateDate) {
         this.idPlant = idPlant;
         this.fuelType = fuelType;
         this.price = price;
@@ -52,18 +51,11 @@ public class GasolinePrice {
         }
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getId() {
-        return id;
-    }
-
     public int getIdPlant() {
         return idPlant;
     }
 
+    @NonNull
     public String getFuelType() {
         return fuelType;
     }
@@ -84,7 +76,7 @@ public class GasolinePrice {
         this.idPlant = idPlant;
     }
 
-    public void setFuelType(String fuelType) {
+    public void setFuelType(@NonNull String fuelType) {
         this.fuelType = fuelType;
     }
 
@@ -110,11 +102,11 @@ public class GasolinePrice {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GasolinePrice that = (GasolinePrice) o;
-        return id == that.id && idPlant == that.idPlant && Double.compare(that.price, price) == 0 && isSelf == that.isSelf && fuelType.equals(that.fuelType) && updateDate.equals(that.updateDate);
+        return idPlant == that.idPlant && Double.compare(that.price, price) == 0 && isSelf == that.isSelf && fuelType.equals(that.fuelType) && updateDate.equals(that.updateDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, idPlant, fuelType, price, isSelf, updateDate);
+        return Objects.hash(idPlant, fuelType, price, isSelf, updateDate);
     }
 }

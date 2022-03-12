@@ -26,11 +26,43 @@
     <fragment
         android:id="@+id/favoritesFragment"
         android:name="dia.units.refuelapp.FavoritesFragment"
-        android:label="fragment_favorites_list"
-        tools:layout="@layout/fragment_favorites_list" />
+        android:label="Favoriti"
+        tools:layout="@layout/fragment_favorites_list">
+        <action
+            android:id="@+id/action_favoritesFragment_to_detailGasolinePlantFragment"
+            app:destination="@id/detailGasolinePlantFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/favoritesFragment" />
+    </fragment>
     <fragment
-        android:id="@+id/searchFragment"
-        android:name="dia.units.refuelapp.SearchFragment"
-        android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        android:id="@+id/reportFragment"
+        android:name="dia.units.refuelapp.ReportFragment"
+        android:label="Report"
+        tools:layout="@layout/fragment_report" />
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="dia.units.refuelapp.AccountFragment"
+        android:label="Account"
+        tools:layout="@layout/fragment_account" >
+        <action
+            android:id="@+id/action_accountFragment_to_addRefuelFragment"
+            app:destination="@id/addRefuelFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/accountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="dia.units.refuelapp.SettingsFragment"
+        android:label="Settings" />
+    <fragment
+        android:id="@+id/addRefuelFragment"
+        android:name="dia.units.refuelapp.AddRefuelFragment"
+        android:label="Aggiungi rifornimento"
+        tools:layout="@layout/add_refuels_item_fragment" />
 </navigation>

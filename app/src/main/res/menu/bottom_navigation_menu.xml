@@ -11,8 +11,13 @@
         android:icon="@drawable/ic_favorites_24"
         android:title="@string/nav_menu_favorites"/>
     <item
-        android:id="@+id/searchFragment"
+        android:id="@+id/reportFragment"
         android:enabled="true"
-        android:icon="@drawable/ic_baseline_search_24"
-        android:title="@string/nav_menu_search"/>
+        android:icon="@drawable/ic_baseline_assessment_24"
+        android:title="@string/nav_menu_report"/>
+    <item
+        android:id="@+id/accountFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_account_circle_24"
+        android:title="@string/nav_menu_account"/>
 </menu>

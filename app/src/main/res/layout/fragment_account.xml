@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    tools:context="dia.units.refuelapp.AccountFragment">
+
+    <ImageView
+        android:id="@+id/image_account_fragment"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:contentDescription="@string/account_image"
+        android:src="@drawable/ic_baseline_account_circle_24" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/username_account_fragment"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/image_account_fragment"
+        android:text="@string/username"
+        android:textSize="15sp"
+        android:visibility="invisible"
+        tools:visibility="visible"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_account_signin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/image_account_fragment"
+        android:layout_centerHorizontal="true"
+        android:text="@string/btn_sign_in"
+        android:visibility="visible"
+        app:backgroundTint="@color/teal400"
+        tools:visibility="visible" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_account_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/username_account_fragment"
+        android:layout_centerHorizontal="true"
+        android:text="@string/btn_log_out"
+        android:visibility="invisible"
+        app:backgroundTint="@color/teal400"
+        tools:visibility="visible" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_refuels_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_account_signin"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        tools:listitem="@layout/recyclerview_refuel_account_item"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_add_refuel_account_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_baseline_add_24"
+        app:backgroundTint="@color/teal400"
+        app:tint="@color/white"
+        android:contentDescription="@string/add_refuel_item_button" />
+
+</RelativeLayout>

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "9e5298d34cea6e9d008581f0c4340876",
+    "identityHash": "bfa92737dff8b89010fb9949cd1aeb72",
     "entities": [
       {
         "tableName": "plants_table",
@@ -127,12 +127,32 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "favorites_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`idPlant` INTEGER NOT NULL, PRIMARY KEY(`idPlant`))",
+        "fields": [
+          {
+            "fieldPath": "idPlant",
+            "columnName": "idPlant",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "idPlant"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9e5298d34cea6e9d008581f0c4340876')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'bfa92737dff8b89010fb9949cd1aeb72')"
     ]
   }
 }

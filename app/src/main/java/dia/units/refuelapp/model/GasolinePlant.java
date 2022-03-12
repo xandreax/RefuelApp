@@ -1,6 +1,7 @@
 package dia.units.refuelapp.model;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.opencsv.bean.CsvBindByName;
@@ -33,6 +34,7 @@ public class GasolinePlant {
     @CsvBindByName(column = "Longitudine")
     private double longitude;
 
+    @Ignore
     public GasolinePlant() {
     }
 
