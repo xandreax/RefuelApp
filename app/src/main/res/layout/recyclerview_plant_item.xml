@@ -88,14 +88,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/self" />
+                    android:text="@string/service_plant" />
 
                 <TextView
                     android:id="@+id/prezzo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/_1_789"
+                    android:text="@string/price_by_liter"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                 <TextView
@@ -103,7 +103,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="end"
-                    android:text="@string/oggi" />
+                    android:text="@string/days_last_update" />
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>

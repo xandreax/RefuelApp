@@ -49,7 +49,7 @@
                 android:layout_toEndOf="@id/fuel_type_box"
                 android:gravity="center"
                 android:paddingBottom="15dp"
-                android:text="@string/self" />
+                android:text="@string/service_plant" />
 
             <TextView
                 android:id="@+id/fuel_price"
@@ -60,7 +60,7 @@
                 android:paddingTop="10dp"
                 android:paddingEnd="20dp"
                 android:paddingBottom="10dp"
-                android:text="@string/_1_789"
+                android:text="@string/price_by_liter"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <LinearLayout
@@ -86,7 +86,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/oggi" />
+                    android:text="@string/days_last_update" />
             </LinearLayout>
 
         </RelativeLayout>
