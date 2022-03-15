@@ -16,7 +16,6 @@
     <string name="name_plant">name_plant</string>
     <string name="city">City</string>
     <string name="location_button">Portami qui</string>
-    <string name="rating">Voto in stelle</string>
     <string name="fuel_pump_icon">Fuel pump icon</string>
     <string name="data">12/02/2022 08:00:00</string>
     <string name="fuel_type">fuel type</string>
@@ -59,4 +58,12 @@
     <string name="km_percorsi">km percorsi</string>
     <string name="add_refuel_item_button">add_refuel_item_button</string>
     <string name="default_text_date_lastupdate">Unknown</string>
+    <string name="add_another_fuel_text">Scegli un altro carburante da visualizzare:</string>
+    <string name="btn_add_another_fuel">Scegli</string>
+    <string name="btn_save_new_refuel_item">Salva</string>
+    <string name="title_items">Rifornimenti salvati:</string>
+    <string name="no_avg_rating">0.0</string>
+    <string name="zero_ratings">(0)</string>
+    <string name="si">Sì</string>
+    <string name="no">No</string>
 </resources>

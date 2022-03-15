@@ -37,8 +37,8 @@ public interface GasolinePlantDao {
             "ORDER BY ABS(latitude - :latitude) + ABS(longitude - :longitude)")
     LiveData<List<PlantWithPrices>> getFavoritePlants(String fuelType, double latitude, double longitude);
 
-    @Query("SELECT * FROM " + GasolinePlant.TABLE_NAME + " ORDER BY idPlant LIMIT 1")
-    ListenableFuture<GasolinePlant> isDbEmpty();
+    @Query("SELECT COUNT(idPlant) FROM " + GasolinePlant.TABLE_NAME + " ORDER BY idPlant LIMIT 1")
+    ListenableFuture<Integer> isDbEmpty();
 
     @Query("SELECT EXISTS(SELECT * FROM " + FavoritePlant.TABLE_NAME + " WHERE idPlant = :idPlant)")
     ListenableFuture<Boolean> isPlantFavorite(int idPlant);
@@ -48,4 +48,7 @@ public interface GasolinePlantDao {
 
     @Query("DELETE FROM " + FavoritePlant.TABLE_NAME + " WHERE idPlant = :idPlant")
     ListenableFuture<Void> removeFavorite(int idPlant);
+
+    @Query("SELECT name FROM "+ GasolinePlant.TABLE_NAME)
+    LiveData<List<String>> getPlantsNames();
 }

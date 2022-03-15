@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.FutureTask;
 
 import dia.units.refuelapp.db.GasolinePlantDao;
 import dia.units.refuelapp.db.GasolinePlantsDb;
@@ -87,30 +88,23 @@ public class RepositoryPlantsAndPrices {
         databaseWriteExecutor.submit(() -> {
             gasolinePlantDao.insertAll(plants);
         });
-        //return GasolinePlantsDb.lExecService.submit(() -> gasolinePlantDao.insertAll(plants));
     }
 
     public void insertAllPrices(List<GasolinePrice> prices) {
         databaseWriteExecutor.submit(() -> gasolinePricesDao.insertAll(prices));
-        /*ListenableFuture<Void> future = gasolinePricesDao.insertAll(prices);
-        future.addListener((Runnable) () -> {
-            try {
-                future.get();
-                Log.i("lte", "Finish insert prices");
-            } catch (ExecutionException | InterruptedException ignored) {
-            }
-        }, databaseWriteExecutor);*/
     }
 
     public void isDbEmpty(RepositoryCallback<Boolean> repositoryCallback) {
-        ListenableFuture<GasolinePlant> future = gasolinePlantDao.isDbEmpty();
-        Futures.addCallback(future, new FutureCallback<GasolinePlant>() {
+        ListenableFuture<Integer> plantEmpty = gasolinePlantDao.isDbEmpty();
+        ListenableFuture<Integer> priceEmpty = gasolinePricesDao.isDbEmpty();
+        ListenableFuture<List<Integer>> emptyTasks = Futures.allAsList(plantEmpty, priceEmpty);
+        Futures.addCallback(emptyTasks, new FutureCallback<List<Integer>>() {
             @Override
-            public void onSuccess(GasolinePlant result) {
-                if (result != null) {
-                    mainThreadHandler.post(() ->repositoryCallback.onComplete(false));
-                } else
+            public void onSuccess(List<Integer> result) {
+                if (result.isEmpty() || result.size() < 2 || result.get(0) == 0 || result.get(1) == 0) {
                     mainThreadHandler.post(() ->repositoryCallback.onComplete(true));
+                } else
+                    mainThreadHandler.post(() ->repositoryCallback.onComplete(false));
             }
             @Override
             public void onFailure(Throwable t) {
@@ -153,54 +147,6 @@ public class RepositoryPlantsAndPrices {
     }
 
     public void makeUpdateDataRequest() {
-        /*ListenableFuture<List<GasolinePlant>> listPlants = CallbackToFutureAdapter.getFuture(completer -> {
-            VolleyCallBack<GasolinePlant> volleyCallback = new VolleyCallBack<GasolinePlant>() {
-                @Override
-                public void onSuccess(List<GasolinePlant> list) {
-                    completer.set(list);
-                }
-
-                @Override
-                public void onFailure(Throwable t) {
-                    completer.setException(t);
-                }
-            };
-            requestPlants(volleyCallback);
-            return volleyCallback;
-        });
-        AsyncFunction<List<GasolinePlant>, Void> asyncFunctionPlants = this::insertAllPlants;
-        ListenableFuture<Void> plantsTask = Futures.transformAsync(listPlants, asyncFunctionPlants, databaseWriteExecutor);
-        ListenableFuture<List<GasolinePrice>> listPrices = CallbackToFutureAdapter.getFuture(completer -> {
-            VolleyCallBack<GasolinePrice> priceVolleyCallBack = new VolleyCallBack<GasolinePrice>() {
-                @Override
-                public void onSuccess(List<GasolinePrice> list) {
-                    completer.set(list);
-                }
-
-                @Override
-                public void onFailure(Throwable t) {
-                    completer.setException(t);
-                }
-            };
-            requestPrices(priceVolleyCallBack);
-            return priceVolleyCallBack;
-        });
-        AsyncFunction<List<GasolinePrice>, Void> asyncFunctionPrices = this::insertAllPrices;
-        ListenableFuture<Void> pricesTask = Futures.transformAsync(listPrices, asyncFunctionPrices, databaseWriteExecutor);
-        ListenableFuture<List<Void>> tasks = Futures.allAsList(plantsTask, pricesTask);
-        Futures.addCallback(tasks, new FutureCallback<List<Void>>() {
-            @Override
-            public void onSuccess(List<Void> result) {
-                Looper.prepare();
-                repositoryCallback.onComplete(result);
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                Looper.prepare();
-                repositoryCallback.onFailure(t);
-            }
-        }, databaseWriteExecutor);*/
         databaseWriteExecutor.submit(()-> {requestPlants(new VolleyCallBack<GasolinePlant>() {
             @Override
             public void onSuccess(List<GasolinePlant> plants) {
@@ -229,7 +175,7 @@ public class RepositoryPlantsAndPrices {
         InputStreamVolleyRequest requestPlants = new InputStreamVolleyRequest(Request.Method.GET, URL_IMPIANTI, null, response -> {
             Log.i("lte", "Start reading plant csv");
             BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(response)));
-            List<GasolinePlant> plants = new CsvToBeanBuilder<GasolinePlant>(reader)
+            databaseWriteExecutor.submit(() ->{List<GasolinePlant> plants = new CsvToBeanBuilder<GasolinePlant>(reader)
                     .withIgnoreQuotations(true)
                     .withSeparator(';')
                     .withSkipLines(1)
@@ -243,8 +189,8 @@ public class RepositoryPlantsAndPrices {
                     .withType(GasolinePlant.class)
                     .build()
                     .parse();
-            Log.i("lte", "Finish reading plant csv, start to insert");
-            volleyCallBack.onSuccess(plants);
+                Log.i("lte", "Finish reading plant csv, start to insert");
+                volleyCallBack.onSuccess(plants);});
         }, volleyCallBack::onFailure);
         requestQueue.add(requestPlants);
     }
@@ -253,16 +199,18 @@ public class RepositoryPlantsAndPrices {
         InputStreamVolleyRequest requestPrices = new InputStreamVolleyRequest(Request.Method.GET, URL_PREZZI, null, response -> {
             Log.i("lte", "Start reading prices csv");
             BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(response)));
-            List<GasolinePrice> prices = new CsvToBeanBuilder<GasolinePrice>(reader)
-                    .withIgnoreQuotations(true)
-                    .withSeparator(';')
-                    .withSkipLines(1)
-                    .withOrderedResults(false)
-                    .withType(GasolinePrice.class)
-                    .build()
-                    .parse();
-            Log.i("lte", "Finish reading prices csv, start to insert");
-            volleyCallBack.onSuccess(prices);
+            databaseWriteExecutor.submit(() -> {
+                List<GasolinePrice> prices = new CsvToBeanBuilder<GasolinePrice>(reader)
+                        .withIgnoreQuotations(true)
+                        .withSeparator(';')
+                        .withSkipLines(1)
+                        .withOrderedResults(false)
+                        .withType(GasolinePrice.class)
+                        .build()
+                        .parse();
+                Log.i("lte", "Finish reading prices csv, start to insert");
+                volleyCallBack.onSuccess(prices);
+            });
         }, volleyCallBack::onFailure);
         requestQueue.add(requestPrices);
     }
@@ -307,5 +255,9 @@ public class RepositoryPlantsAndPrices {
                 entriesRepositoryCallback.onFailure(t);
             }
         }, databaseWriteExecutor);
+    }
+
+    public LiveData<List<String>> getPlantsNames() {
+        return gasolinePlantDao.getPlantsNames();
     }
 }

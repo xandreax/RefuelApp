@@ -47,6 +47,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.concurrent.TimeUnit;
 
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
             if (isLocationEnabled()) {
                 getLastLocation();
             } else {
-                Toast.makeText(this, "Please turn on your location", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Per favore abilita la posizione del dispositivo", Toast.LENGTH_LONG).show();
             }
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, LOCATION_REQUEST_CODE);
@@ -118,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
         btnLogout.setOnClickListener(view2 -> {
             FirebaseAuth.getInstance().signOut();
-            Toast.makeText(getApplicationContext(), "User logout successfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Logout avvenuto con successo", Toast.LENGTH_SHORT).show();
         });
 
         NavigationUI.setupWithNavController(drawer_view, navController);
@@ -171,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 // permission not granted
                 Log.i("lte", "permission not granted");
-                Toast.makeText(this, "Denied location permission: unable to find position", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Negato il permesso alla localizzazione: impossibile stabilire la posizione", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -193,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
                 if (isNetworkAvailable()) {
                     getCurrentLocation();
                 } else {
-                    Toast.makeText(this, "You are currently offline, please turn on your internet connection", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "Sei attualmente offline, connettiti ad internet e riavvia l'applicazione", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -231,23 +232,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onComplete(Boolean result) {
                 if (result) {
-                    Toast.makeText(getApplicationContext(), "Db is empty", Toast.LENGTH_SHORT).show();
                     if (isNetworkAvailable()) {
-                        PeriodicWorkRequest updateDataRequest = new PeriodicWorkRequest.Builder(DownloadDataWorker.class, 1, TimeUnit.DAYS)
+                        PeriodicWorkRequest updateDataRequest = new PeriodicWorkRequest
+                                .Builder(DownloadDataWorker.class, 12, TimeUnit.HOURS)
                                 .setConstraints(new Constraints.Builder()
                                         .setRequiredNetworkType(NetworkType.CONNECTED).build())
-                                //.setInitialDelay(12, TimeUnit.HOURS)
                                 .build();
                         WorkManager.getInstance(getApplicationContext()).enqueue(updateDataRequest);
-                        //plantAndPricesViewModel.makeUpdateDataRequest();
                     } else {
-                        Toast.makeText(getApplicationContext(), "You are currently offline, please turn on your internet connection and restart the application", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Sei attualmente offline, connettiti ad internet e riavvia l'applicazione", Toast.LENGTH_LONG).show();
                     }
-                } else {
-                    Toast.makeText(getApplicationContext(), "Db is not empty", Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
             public void onFailure(Throwable t) {
                 Toast.makeText(getApplicationContext(), "something gone wrong, impossible communicate with database", Toast.LENGTH_LONG).show();

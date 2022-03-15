@@ -78,10 +78,6 @@ public class PlantAndPricesViewModel extends AndroidViewModel {
         repositoryPlantsAndPrices.isDbEmpty(emptyCallback);
     }
 
-    public void makeUpdateDataRequest() {
-        repositoryPlantsAndPrices.makeUpdateDataRequest();
-    }
-
     private class MediatorPositionFuelType extends MediatorLiveData<Pair<Location, String>> {
         public MediatorPositionFuelType(MutableLiveData<Location> location, MutableLiveData<String> fuelType) {
             addSource(location, location1 -> setValue(Pair.create(location1, fuelType.getValue())));
@@ -159,5 +155,9 @@ public class PlantAndPricesViewModel extends AndroidViewModel {
                 t.printStackTrace();
             }
         });
+    }
+
+    public LiveData<List<String>> getPlantsNames(){
+        return repositoryPlantsAndPrices.getPlantsNames();
     }
 }

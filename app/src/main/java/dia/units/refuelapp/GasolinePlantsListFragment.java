@@ -22,6 +22,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.refuelapp.R;
 
+import javax.annotation.Nonnull;
+
 import dia.units.refuelapp.data.DetailsPlantViewModel;
 import dia.units.refuelapp.data.PlantAndPricesViewModel;
 import dia.units.refuelapp.ui.PlantsAdapter;
@@ -57,14 +59,24 @@ public class GasolinePlantsListFragment extends Fragment {
             plantsAdapter.setActualLocation(plantsListViewModel.getPosition());
             plantsAdapter.submitData(getLifecycle(), listPlantWithPrices);
             //listener
-
-            Log.i("lte", "Size: "+ plantsAdapter.getItemCount());
+            plantsAdapter.addLoadStateListener(combinedLoadStates -> {
+                if (!(combinedLoadStates.getRefresh() instanceof LoadState.NotLoading)) {
+                    return Unit.INSTANCE; // this is the void equivalent in kotlin
+                }
+                if (plantsAdapter.getItemCount() == 0) {
+                    loading();
+                } else {
+                    stopLoading();
+                }
+                return Unit.INSTANCE; // this is the void equivalent in kotlin
+            });
+            Log.i("lte", "Size: " + plantsAdapter.getItemCount());
         });
         detailsPlantViewModel = new ViewModelProvider(requireActivity()).get(DetailsPlantViewModel.class);
 
         plantsAdapter.setOnItemClickListener(plantWithPrices -> {
             detailsPlantViewModel.getPlant().postValue(plantWithPrices);
-            if(!detailsPlantViewModel.getPlant().hasActiveObservers()){
+            if (!detailsPlantViewModel.getPlant().hasActiveObservers()) {
                 NavController navController = NavHostFragment.findNavController(this);
                 navController.getGraph().findNode(R.id.detailGasolinePlantFragment).setLabel(plantWithPrices.gasolinePlant.getName());
                 navController.navigate(R.id.action_gasolinePlantsListFragment_to_detailGasolinePlantFragment);

@@ -8,59 +8,77 @@
     android:padding="24dp"
     tools:context="dia.units.refuelapp.AccountFragment">
 
-    <ImageView
-        android:id="@+id/image_account_fragment"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"
-        android:contentDescription="@string/account_image"
-        android:src="@drawable/ic_baseline_account_circle_24" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/account_data_container">
+        <ImageView
+            android:id="@+id/image_account_fragment"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/account_image"
+            android:src="@drawable/ic_baseline_account_circle_24" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/username_account_fragment"
+                android:text="@string/username"
+                android:layout_marginTop="15dp"
+                android:textSize="18sp"
+                android:visibility="invisible"
+                tools:visibility="visible"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_account_signin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_centerHorizontal="true"
+                android:text="@string/btn_sign_in"
+                android:visibility="visible"
+                app:backgroundTint="@color/teal400"
+                tools:visibility="visible" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_account_logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/username_account_fragment"
+                android:text="@string/btn_log_out"
+                android:visibility="invisible"
+                app:backgroundTint="@color/teal400"
+                tools:visibility="visible" />
+        </RelativeLayout>
+
+
+    </LinearLayout>
 
     <TextView
+        android:id="@+id/title_refuel_items"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/username_account_fragment"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/image_account_fragment"
-        android:text="@string/username"
-        android:textSize="15sp"
-        android:visibility="invisible"
-        tools:visibility="visible"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_account_signin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/image_account_fragment"
-        android:layout_centerHorizontal="true"
-        android:text="@string/btn_sign_in"
-        android:visibility="visible"
-        app:backgroundTint="@color/teal400"
-        tools:visibility="visible" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_account_logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/username_account_fragment"
-        android:layout_centerHorizontal="true"
-        android:text="@string/btn_log_out"
-        android:visibility="invisible"
-        app:backgroundTint="@color/teal400"
-        tools:visibility="visible" />
+        android:layout_below="@id/account_data_container"
+        android:layout_marginTop="15dp"
+        android:text="@string/title_items"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textColor="@color/teal700" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_refuels_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btn_account_signin"
+        android:layout_below="@id/title_refuel_items"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
-        tools:listitem="@layout/recyclerview_refuel_account_item"/>
+        android:layout_marginTop="5dp"
+        tools:listitem="@layout/recyclerview_refuel_account_item" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_add_refuel_account_item"

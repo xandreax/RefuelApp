@@ -1,24 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/date_refuel_item"
-        android:text="@string/data"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:orientation="horizontal"
+        android:id="@+id/date_refuel_item_container"
         android:layout_marginTop="10dp"
-        android:layout_marginStart="20dp"/>
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp">
 
-    <androidx.cardview.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/date_refuel_item"
+            android:text="@string/data"
+            android:layout_weight="1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:layout_marginStart="20dp"/>
+
+        <ImageButton
+            android:id="@+id/btn_delete_refuel_item"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/ic_baseline_delete_24"
+            android:background="@null"/>
+    </LinearLayout>
+
+
+    <androidx.cardview.widget.CardView
         android:id="@+id/refuel_account_item_cv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:animateLayoutChanges="true"
-        app:cardCornerRadius="20dp"
+        app:cardCornerRadius="10dp"
         app:cardElevation="4dp"
         app:cardUseCompatPadding="true">
 
@@ -64,9 +84,17 @@
                     android:id="@+id/liters_refuel_item"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="50dp"
+                    android:layout_marginEnd="5dp"
                     android:text="@string/litri"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+                <TextView
+                    android:id="@+id/liters_refuel_item_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="40dp"
+                    android:paddingTop="10dp"
+                    android:text="@string/litri" />
 
                 <TextView
                     android:id="@+id/money_refuel_item"
@@ -101,10 +129,17 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
                 <TextView
+                    android:id="@+id/lkilometers_refuel_item_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:paddingTop="10dp"
+                    android:text="km" />
+                <TextView
                     android:id="@+id/kilometers_refuel_item"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
+                    android:layout_marginStart="5dp"
                     android:text="@string/km_percorsi"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
             </LinearLayout>

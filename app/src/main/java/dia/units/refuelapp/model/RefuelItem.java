@@ -6,6 +6,8 @@ import androidx.room.TypeConverters;
 
 import java.util.Date;
 
+import javax.annotation.Nullable;
+
 import dia.units.refuelapp.db.DateConverter;
 
 @Entity(tableName = RefuelItem.TABLE_NAME)
@@ -13,16 +15,16 @@ public class RefuelItem {
     public static final String TABLE_NAME = "refuel_items_table";
     @PrimaryKey(autoGenerate = true)
     private int id;
-    private int idPlant;
     private double money;
     private double liters;
     private double price_by_liter;
     private double kilometers;
     @TypeConverters(DateConverter.class)
     private Date updateDate;
+    private String namePlant;
 
-    public RefuelItem(int idPlant, double money, double liters, double price_by_liter, double kilometers, Date updateDate) {
-        this.idPlant = idPlant;
+    public RefuelItem(String namePlant, double money, double liters, double price_by_liter, double kilometers, Date updateDate) {
+        this.namePlant = namePlant;
         this.money = money;
         this.liters = liters;
         this.price_by_liter = price_by_liter;
@@ -38,12 +40,12 @@ public class RefuelItem {
         this.id = id;
     }
 
-    public int getIdPlant() {
-        return idPlant;
+    public String getNamePlant() {
+        return namePlant;
     }
 
-    public void setIdPlant(int idPlant) {
-        this.idPlant = idPlant;
+    public void setNamePlant(String namePlant) {
+        this.namePlant = namePlant;
     }
 
     public double getMoney() {

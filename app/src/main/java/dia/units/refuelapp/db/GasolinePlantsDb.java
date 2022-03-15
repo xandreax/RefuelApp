@@ -11,7 +11,7 @@ import dia.units.refuelapp.model.GasolinePlant;
 import dia.units.refuelapp.model.GasolinePrice;
 import dia.units.refuelapp.model.RefuelItem;
 
-@Database(entities = {GasolinePlant.class, GasolinePrice.class, FavoritePlant.class, RefuelItem.class}, version = 5)
+@Database(entities = {GasolinePlant.class, GasolinePrice.class, FavoritePlant.class, RefuelItem.class}, version = 7)
 public abstract class GasolinePlantsDb extends RoomDatabase {
 
     private static GasolinePlantsDb instance;

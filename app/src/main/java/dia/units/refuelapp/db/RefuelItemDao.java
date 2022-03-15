@@ -23,6 +23,6 @@ public interface RefuelItemDao {
     ListenableFuture<Void> deleteRefuelItem(int id);
 
     @Query("SELECT name, flagCompany, id, money, liters, price_by_liter, kilometers, updateDate FROM " + GasolinePlant.TABLE_NAME + " INNER JOIN " + RefuelItem.TABLE_NAME + " ON "
-            + RefuelItem.TABLE_NAME + ".idPlant = " + GasolinePlant.TABLE_NAME + ".idPlant")
+            + RefuelItem.TABLE_NAME + ".namePlant = " + GasolinePlant.TABLE_NAME + ".name")
     LiveData<List<RefuelItemWithPlantInfo>> getAllRefuelItems();
 }

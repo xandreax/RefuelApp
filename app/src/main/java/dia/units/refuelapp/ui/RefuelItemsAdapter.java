@@ -18,10 +18,12 @@ import com.example.refuelapp.R;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
+import dia.units.refuelapp.model.PlantWithPrices;
 import dia.units.refuelapp.model.RefuelItem;
 import dia.units.refuelapp.model.RefuelItemWithPlantInfo;
 
 public class RefuelItemsAdapter extends ListAdapter<RefuelItemWithPlantInfo, RefuelItemsAdapter.RefuelViewHolder> {
+    private RefuelItemsAdapter.onItemClickListener listener;
 
     public RefuelItemsAdapter() {
         super(DIFF_CALLBACK);
@@ -43,19 +45,31 @@ public class RefuelItemsAdapter extends ListAdapter<RefuelItemWithPlantInfo, Ref
     @Override
     public RefuelViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_refuel_account_item, parent, false);
-        return new RefuelViewHolder(view);
+        RefuelViewHolder refuelViewHolder = new RefuelViewHolder(view);
+        refuelViewHolder.itemView.findViewById(R.id.btn_delete_refuel_item).setOnClickListener(view1 -> {
+            int position = refuelViewHolder.getBindingAdapterPosition();
+            if (listener != null && position != RecyclerView.NO_POSITION) {
+                listener.onItemClick(getItem(position));
+            }
+        });
+        return refuelViewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull RefuelViewHolder holder, int position) {
         RefuelItemWithPlantInfo item = getItem(position);
-        holder.money.setText(String.valueOf(item.getMoney()));
+        String money = item.getMoney() + " €";
+        holder.money.setText(money);
         holder.liters.setText(String.valueOf(item.getLiters()));
         holder.kilometers.setText(String.valueOf(item.getKilometers()));
         holder.update_date.setText(new SimpleDateFormat("EEE, d MMM yyyy", Locale.getDefault()).format(item.getUpdateDate()));
         holder.namePlant.setText(item.getName());
-        holder.price_by_liter.setText(String.valueOf(item.getPrice_by_liter()));
-        holder.logoFuelCompany.setImageResource(setLogo(item.getFlagCompany()));
+        String priceByLiter = item.getPrice_by_liter()+ " €/l";
+        holder.price_by_liter.setText(priceByLiter);
+        if(item.getFlagCompany() == null)
+            holder.logoFuelCompany.setImageResource(setLogo(""));
+        else
+            holder.logoFuelCompany.setImageResource(setLogo(item.getFlagCompany()));
     }
 
     public class RefuelViewHolder extends RecyclerView.ViewHolder{
@@ -77,5 +91,13 @@ public class RefuelItemsAdapter extends ListAdapter<RefuelItemWithPlantInfo, Ref
             money = itemView.findViewById(R.id.money_refuel_item);
             liters = itemView.findViewById(R.id.liters_refuel_item);
         }
+    }
+
+    public interface onItemClickListener {
+        void onItemClick(RefuelItemWithPlantInfo refuelItem);
+    }
+
+    public void setOnItemClickListener(RefuelItemsAdapter.onItemClickListener listener) {
+        this.listener = listener;
     }
 }

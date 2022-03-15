@@ -2,6 +2,11 @@ package dia.units.refuelapp.ui.util;
 
 import com.example.refuelapp.R;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.Date;
 
 import dia.units.refuelapp.model.GasolinePlant;
@@ -10,13 +15,17 @@ import dia.units.refuelapp.model.GasolinePrice;
 public class UiUtilMethods {
 
     public static String setDate(GasolinePrice gasolinePrice){
-        Date today = new Date();
-        if(gasolinePrice.getDaysOfLastUpdate(today) == 0 )
+        LocalTime midnight = LocalTime.MIDNIGHT;
+        LocalDate today = LocalDate.now(ZoneId.systemDefault());
+        LocalDateTime todayMidnight = LocalDateTime.of(today, midnight);
+        LocalDateTime tomorrowMidnight = todayMidnight.plusDays(1);
+        Date date = Date.from(tomorrowMidnight.toInstant(ZoneOffset.ofTotalSeconds(0)));
+        if(gasolinePrice.getDaysOfLastUpdate(date) == 0 )
             return "Oggi";
-        else if(gasolinePrice.getDaysOfLastUpdate(today) == 1 )
+        else if(gasolinePrice.getDaysOfLastUpdate(date) == 1 )
             return "Ieri";
         else {
-            return "(" + gasolinePrice.getDaysOfLastUpdate(today) + " giorni fa)";
+            return "(" + gasolinePrice.getDaysOfLastUpdate(date) + " giorni fa)";
         }
     }
 

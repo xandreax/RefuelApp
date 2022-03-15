@@ -4,10 +4,13 @@ import androidx.room.TypeConverters;
 
 import java.util.Date;
 
+import javax.annotation.Nullable;
+
 import dia.units.refuelapp.db.DateConverter;
 
 public class RefuelItemWithPlantInfo {
     private String name;
+    @Nullable
     private String flagCompany;
     private int id;
     private double money;
@@ -17,7 +20,7 @@ public class RefuelItemWithPlantInfo {
     @TypeConverters(DateConverter.class)
     private Date updateDate;
 
-    public RefuelItemWithPlantInfo(String name, String flagCompany, int id, double money, double liters, double price_by_liter, double kilometers, Date updateDate) {
+    public RefuelItemWithPlantInfo(String name, @Nullable String flagCompany, int id, double money, double liters, double price_by_liter, double kilometers, Date updateDate) {
         this.name = name;
         this.flagCompany = flagCompany;
         this.id = id;
@@ -32,6 +35,7 @@ public class RefuelItemWithPlantInfo {
         return name;
     }
 
+    @Nullable
     public String getFlagCompany() {
         return flagCompany;
     }

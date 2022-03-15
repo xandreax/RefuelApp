@@ -92,8 +92,8 @@ public class GasolinePrice {
         this.updateDate = updateDate;
     }
 
-    public int getDaysOfLastUpdate (Date date){
-        long diffInMillis = Math.abs(date.getTime() - updateDate.getTime());
+    public int getDaysOfLastUpdate (Date today){
+        long diffInMillis = Math.abs(today.getTime() - updateDate.getTime());
         return (int) (diffInMillis/ (1000 * 60 * 60* 24));
     }
 

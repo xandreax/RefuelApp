@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.refuelapp.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.List;
 
@@ -31,6 +33,7 @@ import dia.units.refuelapp.ui.RefuelItemsAdapter;
 public class AccountFragment extends Fragment {
     private Button btnSignIn;
     private Button btnLogout;
+    private TextView tUsername;
     private RefuelItemViewModel refuelItemViewModel;
 
     @Override
@@ -38,28 +41,37 @@ public class AccountFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_account, container, false);
         btnSignIn = view.findViewById(R.id.btn_account_signin);
         btnLogout = view.findViewById(R.id.btn_account_logout);
+        tUsername = view.findViewById(R.id.username_account_fragment);
         RecyclerView recyclerViewRefuelItems = view.findViewById(R.id.recycler_view_refuels_list);
         final RefuelItemsAdapter refuelItemsAdapter = new RefuelItemsAdapter();
         recyclerViewRefuelItems.setAdapter(refuelItemsAdapter);
         recyclerViewRefuelItems.setLayoutManager(new LinearLayoutManager(getContext()));
         refuelItemViewModel = new ViewModelProvider(requireActivity()).get(RefuelItemViewModel.class);
-        if (FirebaseAuth.getInstance().getCurrentUser() != null)
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             userIsLogged();
+            tUsername.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        }
         else
             userNotLogged();
         FirebaseAuth.getInstance().addAuthStateListener(firebaseAuth -> {
-            if (firebaseAuth.getCurrentUser() != null)
+            if (firebaseAuth.getCurrentUser() != null) {
                 userIsLogged();
+                tUsername.setText(firebaseAuth.getCurrentUser().getEmail());
+            }
             else
                 userNotLogged();
         });
         btnSignIn.setOnClickListener(view1 -> startActivity(new Intent(getActivity().getApplication(), LoginActivity.class)));
         btnLogout.setOnClickListener(view2 -> {
             FirebaseAuth.getInstance().signOut();
-            Toast.makeText(getContext(), "User logout successfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Logout avvenuto con successo", Toast.LENGTH_SHORT).show();
         });
 
         refuelItemViewModel.refuelItems.observe(getViewLifecycleOwner(), refuelItemsAdapter::submitList);
+
+        refuelItemsAdapter.setOnItemClickListener(refuelItem -> {
+            refuelItemViewModel.deleteRefuelItem(refuelItem);
+        });
 
         FloatingActionButton btn_add_refuels = view.findViewById(R.id.btn_add_refuel_account_item);
         btn_add_refuels.setOnClickListener(view12 -> {
@@ -73,10 +85,13 @@ public class AccountFragment extends Fragment {
     private void userIsLogged() {
         btnSignIn.setVisibility(View.GONE);
         btnLogout.setVisibility(View.VISIBLE);
+        tUsername.setVisibility(View.VISIBLE);
+
     }
 
     private void userNotLogged() {
         btnLogout.setVisibility(View.GONE);
         btnSignIn.setVisibility(View.VISIBLE);
+        tUsername.setVisibility(View.GONE);
     }
 }

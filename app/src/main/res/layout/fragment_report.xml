@@ -16,12 +16,21 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:textColor="@color/teal700" />
 
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/switch_self_service"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_report"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:text="Self Service" />
+
     <LinearLayout
         android:id="@+id/benzina_report_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/title_report"
-        android:layout_marginTop="15dp"
+        android:layout_below="@id/switch_self_service"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -110,10 +119,9 @@
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/chart_avg_prices_fuels"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="200dp"
         android:layout_below="@id/date_last_update_report_container"
         android:layout_marginTop="15dp" />
-
 
     <TextView
         android:layout_width="wrap_content"
@@ -123,7 +131,7 @@
         android:gravity="center"
         android:textSize="20sp"
         android:layout_below="@id/chart_avg_prices_fuels"
-        android:text="Scegli un altro carburante da visualizzare:" />
+        android:text="@string/add_another_fuel_text" />
 
     <com.google.android.material.button.MaterialButton
         android:layout_width="wrap_content"
@@ -132,8 +140,9 @@
         android:layout_below="@id/add_another_fuel_container"
         android:layout_marginTop="10dp"
         android:gravity="center"
-        android:text="Scegli"
+        android:text="@string/btn_add_another_fuel"
         app:backgroundTint="@color/teal400"
         android:layout_centerHorizontal="true"/>
+
 
 </RelativeLayout>
