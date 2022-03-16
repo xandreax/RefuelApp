@@ -33,7 +33,7 @@
         android:layout_below="@id/account_img_drawer"
         android:text="@string/btn_sign_in"
         android:visibility="visible"
-        app:backgroundTint="@color/teal_A300"
+        app:backgroundTint="@color/teal700"
         tools:visibility="visible" />
 
     <com.google.android.material.button.MaterialButton
@@ -44,7 +44,7 @@
         android:layout_below="@id/username_drawer"
         android:text="@string/btn_log_out"
         android:visibility="invisible"
-        app:backgroundTint="@color/teal_A300"
+        app:backgroundTint="@color/teal700"
         tools:visibility="visible" />
 
 </RelativeLayout>

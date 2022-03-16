@@ -63,4 +63,8 @@
     <string name="zero_ratings">(0)</string>
     <string name="si">Sì</string>
     <string name="no">No</string>
+    <string name="LITRI">LITRI</string>
+    <string name="kilometri">Kilometri</string>
+    <string name="Date">Data</string>
+    <string name="Insert_plant">Inserisci il distributore:</string>
 </resources>
