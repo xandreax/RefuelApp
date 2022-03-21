@@ -68,9 +68,8 @@ public class GasolinePlantsListFragment extends Fragment {
                 } else {
                     stopLoading();
                 }
-                return Unit.INSTANCE; // this is the void equivalent in kotlin
+                return Unit.INSTANCE;
             });
-            Log.i("lte", "Size: " + plantsAdapter.getItemCount());
         });
         detailsPlantViewModel = new ViewModelProvider(requireActivity()).get(DetailsPlantViewModel.class);
 

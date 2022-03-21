@@ -165,13 +165,11 @@ public class MainActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == LOCATION_REQUEST_CODE) {
-            Log.i("lte", "Grant Results length: " + grantResults.length);
             if (grantResults.length > 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                 // permission granted
                 getLastLocation();
             } else {
                 // permission not granted
-                Log.i("lte", "permission not granted");
                 Toast.makeText(this, "Negato il permesso alla localizzazione: impossibile stabilire la posizione", Toast.LENGTH_SHORT).show();
             }
         }

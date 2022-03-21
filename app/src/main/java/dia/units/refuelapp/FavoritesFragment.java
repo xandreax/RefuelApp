@@ -50,7 +50,6 @@ public class FavoritesFragment extends Fragment {
             favoritesAdapter.setFuel_type(plantsListViewModel.getFuelType());
             favoritesAdapter.setActualLocation(plantsListViewModel.getPosition());
             favoritesAdapter.submitList(listPlantWithPrices);
-            Log.i("lte", "Favorites size: "+ favoritesAdapter.getCurrentList().size());
         });
         detailsPlantViewModel = new ViewModelProvider(requireActivity()).get(DetailsPlantViewModel.class);
 
