@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "792922798558",
+    "project_id": "refuelapp-ad8ee",
+    "storage_bucket": "refuelapp-ad8ee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:792922798558:android:e0807001823c5086f9c54f",
+        "android_client_info": {
+          "package_name": "dia.units.refuelapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "792922798558-4o4227b9hc6f1cvjjdo91siu7cdjp5io.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6ejPXPzupOIVfI4INdVotWv_1_3HxguA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "792922798558-4o4227b9hc6f1cvjjdo91siu7cdjp5io.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
