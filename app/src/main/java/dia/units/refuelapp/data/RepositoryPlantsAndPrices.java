@@ -181,10 +181,8 @@ public class RepositoryPlantsAndPrices {
                     .withSkipLines(1)
                     .withOrderedResults(false)
                     .withExceptionHandler(e -> {
-                        if (e instanceof CsvDataTypeMismatchException)
-                            return null;
-                        else
-                            throw new CsvException(e.getLocalizedMessage());
+                       e.printStackTrace();
+                       return null;
                     })
                     .withType(GasolinePlant.class)
                     .build()
