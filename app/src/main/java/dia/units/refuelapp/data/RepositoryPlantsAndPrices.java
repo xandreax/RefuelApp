@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
-import androidx.concurrent.futures.CallbackToFutureAdapter;
 import androidx.core.os.HandlerCompat;
 import androidx.lifecycle.LiveData;
 import androidx.paging.Pager;
@@ -19,23 +18,20 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.Volley;
 import com.github.mikephil.charting.data.BarEntry;
-import com.google.common.util.concurrent.AsyncFunction;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
+import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
-import com.opencsv.exceptions.CsvDataTypeMismatchException;
-import com.opencsv.exceptions.CsvException;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.FutureTask;
 
 import dia.units.refuelapp.db.GasolinePlantDao;
 import dia.units.refuelapp.db.GasolinePlantsDb;
@@ -175,18 +171,20 @@ public class RepositoryPlantsAndPrices {
         InputStreamVolleyRequest requestPlants = new InputStreamVolleyRequest(Request.Method.GET, URL_IMPIANTI, null, response -> {
             Log.i("lte", "Start reading plant csv");
             BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(response)));
-            databaseWriteExecutor.submit(() ->{List<GasolinePlant> plants = new CsvToBeanBuilder<GasolinePlant>(reader)
-                    .withIgnoreQuotations(true)
-                    .withSeparator(';')
-                    .withSkipLines(1)
-                    .withOrderedResults(false)
-                    .withExceptionHandler(e -> {
-                       e.printStackTrace();
-                       return null;
-                    })
-                    .withType(GasolinePlant.class)
-                    .build()
-                    .parse();
+            databaseWriteExecutor.submit(() ->{
+                final CsvToBean<GasolinePlant> plantBeans = new CsvToBeanBuilder<GasolinePlant>(reader)
+                        .withIgnoreQuotations(true)
+                        .withSeparator(';')
+                        .withSkipLines(1)
+                        .withOrderedResults(false)
+                        .withThrowExceptions(false)
+                        .withExceptionHandler(e -> {
+                            Log.i("lte", String.format("Inconsistent data: %s %s", Arrays.toString(e.getLine()),e.toString()));
+                            return null;
+                        })
+                        .withType(GasolinePlant.class)
+                        .build();
+                List<GasolinePlant> plants = plantBeans.parse();
                 Log.i("lte", "Finish reading plant csv, start to insert");
                 volleyCallBack.onSuccess(plants);});
         }, volleyCallBack::onFailure);
@@ -198,14 +196,19 @@ public class RepositoryPlantsAndPrices {
             Log.i("lte", "Start reading prices csv");
             BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(response)));
             databaseWriteExecutor.submit(() -> {
-                List<GasolinePrice> prices = new CsvToBeanBuilder<GasolinePrice>(reader)
+                final CsvToBean<GasolinePrice> priceBeans = new CsvToBeanBuilder<GasolinePrice>(reader)
                         .withIgnoreQuotations(true)
                         .withSeparator(';')
                         .withSkipLines(1)
+                        .withThrowExceptions(false)
+                        .withExceptionHandler(e -> {
+                            Log.i("lte", String.format("Inconsistent data: %s %s", Arrays.toString(e.getLine()),e.toString()));
+                            return null;
+                        })
                         .withOrderedResults(false)
                         .withType(GasolinePrice.class)
-                        .build()
-                        .parse();
+                        .build();
+                List<GasolinePrice> prices = priceBeans.parse();
                 Log.i("lte", "Finish reading prices csv, start to insert");
                 volleyCallBack.onSuccess(prices);
             });
