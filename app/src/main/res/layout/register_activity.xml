@@ -106,7 +106,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Continue"
+                android:text="@string/login_continue_withoutlogin_label"
                 android:textSize="16sp"/>
 
             <TextView
@@ -114,7 +114,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="without sign in"
+                android:text="@string/continue_without_login_textlink"
                 android:textColor="@color/teal400"
                 android:textStyle="bold"
                 android:textSize="20sp"/>

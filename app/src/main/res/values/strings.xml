@@ -67,4 +67,6 @@
     <string name="kilometri">Kilometri</string>
     <string name="Date">Data</string>
     <string name="Insert_plant">Inserisci il distributore:</string>
+    <string name="login_continue_withoutlogin_label">Continua</string>
+    <string name="continue_without_login_textlink">senza registrarti</string>
 </resources>
